@@ -27,11 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
-<<<<<<< HEAD
- * @author utilisateur
-=======
  * @author Antoine
->>>>>>> origin/master
  */
 @Entity
 @Table(name = "service")
@@ -73,19 +69,11 @@ public class Service implements Serializable {
     @NotNull
     @Column(name = "position_longitude")
     private float positionLongitude;
-<<<<<<< HEAD
-    @JoinColumn(name = "type_service", referencedColumnName = "id_type")
-    @ManyToOne(optional = false)
-    private TypeService typeService;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idService")
-    private Collection<MenuRestaurant> menuRestaurantCollection;
-=======
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idService")
     private Collection<MenuRestaurant> menuRestaurantCollection;
     @JoinColumn(name = "type_service", referencedColumnName = "id_type")
     @ManyToOne(optional = false)
     private TypeService typeService;
->>>>>>> origin/master
 
     public Service() {
     }
@@ -151,17 +139,6 @@ public class Service implements Serializable {
         this.positionLongitude = positionLongitude;
     }
 
-<<<<<<< HEAD
-    public TypeService getTypeService() {
-        return typeService;
-    }
-
-    public void setTypeService(TypeService typeService) {
-        this.typeService = typeService;
-    }
-
-=======
->>>>>>> origin/master
     @XmlTransient
     public Collection<MenuRestaurant> getMenuRestaurantCollection() {
         return menuRestaurantCollection;
@@ -171,8 +148,6 @@ public class Service implements Serializable {
         this.menuRestaurantCollection = menuRestaurantCollection;
     }
 
-<<<<<<< HEAD
-=======
     public TypeService getTypeService() {
         return typeService;
     }
@@ -181,7 +156,6 @@ public class Service implements Serializable {
         this.typeService = typeService;
     }
 
->>>>>>> origin/master
     @Override
     public int hashCode() {
         int hash = 0;

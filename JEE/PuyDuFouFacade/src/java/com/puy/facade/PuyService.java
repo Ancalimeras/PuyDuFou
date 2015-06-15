@@ -6,7 +6,9 @@
 package com.puy.facade;
 
 import com.puy.business.logic.PuyOperationBeanRemote;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import javax.ejb.EJB;
@@ -14,7 +16,6 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
@@ -23,12 +24,11 @@ import javax.inject.Inject;
 @WebService(serviceName = "PuyService", name="Puy")
 @Stateless
 public class PuyService {
-    @EJB
-    PuyOperationBeanRemote puyRemote;
 
-    /**
-     * This is a sample web service operation
-     */
+    
+    @EJB
+    private PuyOperationBeanRemote puyRemote;
+    
     @WebMethod(operationName = "hello")
     public String hello() {
         
@@ -39,6 +39,6 @@ public class PuyService {
         SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
         
         
-        return puyRemote.testWS();
+        return date.format(d);
     }
 }

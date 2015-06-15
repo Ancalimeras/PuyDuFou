@@ -24,11 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
-<<<<<<< HEAD
- * @author utilisateur
-=======
  * @author Antoine
->>>>>>> origin/master
  */
 @Entity
 @Table(name = "planning")

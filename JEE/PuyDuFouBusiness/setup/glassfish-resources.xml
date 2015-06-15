@@ -6,17 +6,9 @@
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="puydufou"/>
         <property name="User" value="root"/>
-<<<<<<< HEAD
-        <property name="Password" value=""/>
-        <property name="URL" value="jdbc:mysql://localhost:3306/puydufou?zeroDateTimeBehavior=convertToNull"/>
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-    </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="jdbc/puyBD" object-type="user" pool-name="mysql_puydufou_rootPool"/>
-=======
         <property name="Password" value="azerty"/>
         <property name="URL" value="jdbc:mysql://localhost:3306/puydufou?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="jdbc/puydufou" object-type="user" pool-name="mysql_puydufou_rootPool"/>
->>>>>>> origin/master
 </resources>

@@ -20,11 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
-<<<<<<< HEAD
- * @author utilisateur
-=======
  * @author Antoine
->>>>>>> origin/master
  */
 @Entity
 @Table(name = "note")
@@ -42,21 +38,12 @@ public class Note implements Serializable {
     @NotNull
     @Column(name = "note")
     private float note;
-<<<<<<< HEAD
-    @JoinColumn(name = "id_spectacle", referencedColumnName = "id_spectacle", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Spectacle spectacle;
-    @JoinColumn(name = "id_utilisateur", referencedColumnName = "id_utilisateur", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Utilisateur utilisateur;
-=======
     @JoinColumn(name = "id_utilisateur", referencedColumnName = "id_utilisateur", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateur;
     @JoinColumn(name = "id_spectacle", referencedColumnName = "id_spectacle", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Spectacle spectacle;
->>>>>>> origin/master
 
     public Note() {
     }
@@ -90,17 +77,6 @@ public class Note implements Serializable {
         this.note = note;
     }
 
-<<<<<<< HEAD
-    public Spectacle getSpectacle() {
-        return spectacle;
-    }
-
-    public void setSpectacle(Spectacle spectacle) {
-        this.spectacle = spectacle;
-    }
-
-=======
->>>>>>> origin/master
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
@@ -109,8 +85,6 @@ public class Note implements Serializable {
         this.utilisateur = utilisateur;
     }
 
-<<<<<<< HEAD
-=======
     public Spectacle getSpectacle() {
         return spectacle;
     }
@@ -119,7 +93,6 @@ public class Note implements Serializable {
         this.spectacle = spectacle;
     }
 
->>>>>>> origin/master
     @Override
     public int hashCode() {
         int hash = 0;
