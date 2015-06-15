@@ -14,7 +14,11 @@ import javax.validation.constraints.Size;
 
 /**
  *
+<<<<<<< HEAD
  * @author utilisateur
+=======
+ * @author Antoine
+>>>>>>> origin/master
  */
 @Embeddable
 public class NotePK implements Serializable {

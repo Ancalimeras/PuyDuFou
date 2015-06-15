@@ -16,7 +16,10 @@
     <binding name="PuyPortBinding" type="tns:Puy">
         <wsp:PolicyReference URI="#PuyPortBindingPolicy"/>
         <operation name="hello">
+<<<<<<< HEAD
             <wsp:PolicyReference URI="#PuyPortBinding_hello_Policy"/>
+=======
+>>>>>>> origin/master
             <input/>
             <output/>
         </operation>
@@ -29,6 +32,7 @@
             <wsp:All/>
         </wsp:ExactlyOne>
     </wsp:Policy>
+<<<<<<< HEAD
     <wsp:Policy wsu:Id="PuyPortBinding_hello_Policy">
         <wsp:ExactlyOne>
             <wsp:All>
@@ -36,4 +40,6 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
+=======
+>>>>>>> origin/master
 </definitions>
