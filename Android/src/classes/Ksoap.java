@@ -14,7 +14,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Xml;
 
-public class Ksoap  extends AsyncTask< Void, byte[], Void>{
+public class Ksoap  extends AsyncTask<Object, Object, Object>{
 	
 	private String text = "toto";
 	
@@ -23,17 +23,19 @@ public class Ksoap  extends AsyncTask< Void, byte[], Void>{
 	private static final String	NAMESPACE	= "http://facade.puy.com/";
 	private static final String	URL	= "http://10.162.130.137:8080/PuyService/Puy?WSDL";*/
 	
-	private static final String	SOAP_ACTION	= "hello";
-	private static final String	METHOD_NAME	= "hello";                                      //Antoine
-	private static final String	NAMESPACE	= "http://facade.puy.com/";
-	private static final String	URL	= "http://10.162.130.151:8080/PuyService/Puy?WSDL";
+	private String	SOAP_ACTION	= "hello";
+	private String	METHOD_NAME	= "hello";                                      //Antoine
+	private String	NAMESPACE	= "http://facade.puy.com/";
+	private String	URL	= "http://10.162.130.151:8080/PuyService/Puy?WSDL";
 	
-	public Ksoap() {
+	public Ksoap(String SOAP_ACTION, String METHOD_NAME) {
+		this.SOAP_ACTION = SOAP_ACTION;
+		this.METHOD_NAME = METHOD_NAME;
 		
 	}
 
 	@Override
-	protected Void doInBackground(Void... params) {
+	protected Object doInBackground(Object... params) {
 		// TODO Auto-generated method stub
 		Log.d("TAG", "1");
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
@@ -51,22 +53,29 @@ public class Ksoap  extends AsyncTask< Void, byte[], Void>{
 			String text = response.toString();                     //Fonctionne
 			/*SoapObject obj = (SoapObject) envelope.bodyIn;      //Fonctionne aussi ^^
 			text = obj.getPropertyAsString(0).toString();*/
-			
 			Log.d("TAG", text);
+	        return text;
 		} catch (HttpResponseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 	        Log.d("TAG", "e");
+	        return "e";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 	        Log.d("TAG", "e");
+	        return "e";
 		} catch (XmlPullParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 	        Log.d("TAG", "e");
+	        return "e";
 		}
-		return null;
+	}
+	
+	@Override
+	public void onPostExecute(Object result) {
+	
 	}
 
 }

@@ -42,21 +42,6 @@ public class MainActivity extends Activity {
         findViewById(R.id.btn_Programme).setOnClickListener(onClickListener);
         findViewById(R.id.btn_Share).setOnClickListener(onClickListener);
         
-        cont = this;
-        
-        rate = (RatingBar) findViewById(R.id.ratingBar1);
-        rate.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-    		public void onRatingChanged(RatingBar ratingBar, float rating,
-    			boolean fromUser) {
-     
-    			//txtRatingValue.setText(String.valueOf(rating));
-    			Toast.makeText(cont, String.valueOf(rating), Toast.LENGTH_LONG).show();
-     
-    		}
-    	});
-        
-        //new Ksoap().execute();
-        
         
 
     }

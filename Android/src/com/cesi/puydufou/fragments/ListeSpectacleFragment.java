@@ -2,6 +2,9 @@ package com.cesi.puydufou.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import classes.Ksoap;
 
 import com.cesi.puydufou.R;
 
@@ -18,9 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ListeSpectacleFragment extends Fragment{
+public class ListeSpectacleFragment extends Fragment {
 	
 	private ListView list;
+	private String response;
 	
 	private List<String> listSpectacles;
 	
@@ -30,7 +34,20 @@ public class ListeSpectacleFragment extends Fragment{
 		
 		list = (ListView) detailJobView.findViewById(R.id.list);
 		
+		try {
+			response =  new Ksoap("hello", "hello").execute().get().toString();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    Toast.makeText(getActivity(), "ksoap response: " + response, Toast.LENGTH_LONG).show();
+		
 		listSpectacles = new ArrayList<String>();
+		
+		
 		String[] values = new String[] {"Spectacle 1", "Spectacle 2", "Spectacle 3", "Spectacle 4"};
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
