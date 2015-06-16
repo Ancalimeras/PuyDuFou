@@ -36,7 +36,7 @@ public class Utilisateur implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 17)
+    @Size(min = 17, max = 17)
     @Column(name = "id_utilisateur")
     private String idUtilisateur;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
