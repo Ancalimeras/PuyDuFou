@@ -16,7 +16,8 @@ import javax.ejb.Remote;
 @Remote
 public interface PuyOperationBeanRemote {
 
-    String testWS();
-    public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur);
+    public boolean verifierAdresseMac(String adresseMac);
+
+    public List<Spectacle> getListeSpectacles();
     
 }

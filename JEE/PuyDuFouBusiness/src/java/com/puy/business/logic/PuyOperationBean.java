@@ -5,17 +5,14 @@
  */
 package com.puy.business.logic;
 
-import com.puy.business.entites.Note;
-import com.puy.business.entites.NotePK;
 import com.puy.business.entites.Spectacle;
 import com.puy.business.entites.Utilisateur;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -25,41 +22,43 @@ import javax.persistence.Query;
  */
 @Stateless
 public class PuyOperationBean implements PuyOperationBeanRemote {
-    public String adresseMac;
     
     
     @PersistenceContext(unitName = "PuyDuFouBusinessPU")
     private EntityManager em;
     
     
-    
     @Override
-    public String testWS() {
-       // List<Spectacle> a = em.createNamedQuery("Spectacle.findAll").getResultList();
-      
-        return "COucou";
-    }
-
-    @Override
-    public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur) {
-        Spectacle s = (Spectacle) em.createNamedQuery("Spectacle.findByIdSpectacle").setParameter("idSpectacle", idSpectacle).getSingleResult();
-        Utilisateur u = new Utilisateur(idUtilisateur);
-        NotePK nPK = new NotePK(idSpectacle, idUtilisateur);
-        Note nouvNote = new Note();
-        nouvNote.setNotePK(nPK);
-        nouvNote.setNote(note);
-        nouvNote.setSpectacle(s);
-        nouvNote.setUtilisateur(u);
-        em.persist(nouvNote);
+    public List<Spectacle> getListeSpectacles() {
+        List<Spectacle> a = em.createNamedQuery("Spectacle.findAll").getResultList();
         
-        double moyNote = (double) em.createQuery("Select avg(n.note) FROM Note n WHERE n.notePK.idSpectacle = :idSpectacle").setParameter("idSpectacle", idSpectacle).getSingleResult();
-        //float nbNote = (float) em.createQuery("Select count(n.note) FROM Note n WHERE n.notePK.idSpectacle = :idSpectacle").setParameter("idSpectacle", idSpectacle).getSingleResult(); 
-        String moyFormated = new DecimalFormat("##.##").format(moyNote);
-        s.setMoyenneNote((float) moyNote);
-        em.persist(s);
-
-        return moyFormated;
+        return a;
     }
+
+    @Override
+    public boolean verifierAdresseMac(String adresseMac) {
+        
+        if(adresseMac.equals(null)){
+            return false;
+        }else{
+            Query q = em.createNamedQuery("Utilisateur.findByIdUtilisateur").setParameter("idUtilisateur", adresseMac);
+        
+            List results = q.getResultList();
+
+            if(results.isEmpty() || results==null){
+                Utilisateur user = new Utilisateur(adresseMac);
+                em.persist(user);
+            }
+        
+        return true;
+        }
+        
+        
+    }
+    
+    
+
+    
 
     
     
