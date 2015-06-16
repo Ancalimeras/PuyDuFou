@@ -5,11 +5,13 @@
  */
 package com.puy.facade;
 
+import com.puy.business.entites.Spectacle;
 import com.puy.business.logic.PuyOperationBeanRemote;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -29,16 +31,52 @@ public class PuyService {
     @EJB
     private PuyOperationBeanRemote puyRemote;
     
+    
+    @WebMethod(operationName = "checkAdresseMac")
+    public void checkAdresseMac(String adresseMac) {
+        
+        puyRemote.checkAdresseMac(adresseMac);
+        
+    }
+    
+    
     @WebMethod(operationName = "hello")
     public String hello() {
         
-        
+        /*
         Locale locale = Locale.FRANCE;
         
         Date d = new Date();
         SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        */
+        //date.format(d)
         
         
-        return date.format(d);
+        //String[] test = {"toto","tata"};
+        
+        
+        return "Test de string";
     }
+    
+    @WebMethod(operationName = "getSpectacles")
+    public List<Spectacle> getSpectacles() {
+        
+        /*
+        Locale locale = Locale.FRANCE;
+        
+        Date d = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        */
+        //date.format(d)
+        
+        
+        //String[] test = {"toto","tata"};
+        
+        
+        return puyRemote.testWS();
+    }
+    
+    
+    
+    
 }

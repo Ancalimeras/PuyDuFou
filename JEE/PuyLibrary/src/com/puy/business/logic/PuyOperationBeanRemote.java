@@ -5,6 +5,8 @@
  */
 package com.puy.business.logic;
 
+import com.puy.business.entites.Spectacle;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,6 +16,8 @@ import javax.ejb.Remote;
 @Remote
 public interface PuyOperationBeanRemote {
 
-    String testWS();
+    List<Spectacle> testWS();
+
+    public void checkAdresseMac(String adresseMac);
     
 }
