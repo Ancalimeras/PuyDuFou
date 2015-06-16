@@ -18,6 +18,8 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  *
@@ -30,19 +32,9 @@ public class PuyService {
     
     @EJB
     private PuyOperationBeanRemote puyRemote;
-    
-    
-    @WebMethod(operationName = "checkAdresseMac")
-    public void checkAdresseMac(String adresseMac) {
-        
-        puyRemote.checkAdresseMac(adresseMac);
-        
-    }
-    
-    
+ 
     @WebMethod(operationName = "hello")
-    public String hello() {
-        
+    public String hello() {       
         /*
         Locale locale = Locale.FRANCE;
         
@@ -53,27 +45,13 @@ public class PuyService {
         
         
         //String[] test = {"toto","tata"};
-        
-        
-        return "Test de string";
+     
+        return puyRemote.testWS();
     }
     
-    @WebMethod(operationName = "getSpectacles")
-    public List<Spectacle> getSpectacles() {
-        
-        /*
-        Locale locale = Locale.FRANCE;
-        
-        Date d = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
-        */
-        //date.format(d)
-        
-        
-        //String[] test = {"toto","tata"};
-        
-        
-        return puyRemote.testWS();
+    @WebMethod(operationName = "evaluerSpectacle")
+    public String evaluerSpectacle(@WebParam(name="note")float note, @WebParam(name="idSpectacle") int idSpectacle, @WebParam(name="idUtilisateur") String idUtilisateur) {             
+        return puyRemote.evaluerSpectacle(note, idSpectacle, idUtilisateur);
     }
     
     
