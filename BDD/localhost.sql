@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 3.4.10.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 17 Juin 2015 à 12:35
--- Version du serveur: 5.6.12-log
--- Version de PHP: 5.4.12
+-- Généré le : Mer 17 Juin 2015 à 15:23
+-- Version du serveur: 5.5.20
+-- Version de PHP: 5.3.10
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,8 +19,32 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `puydufou`
 --
-CREATE DATABASE IF NOT EXISTS `puydufou` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE `puydufou` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `puydufou`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `boutique`
+--
+
+CREATE TABLE IF NOT EXISTS `boutique` (
+  `id_boutique` int(10) NOT NULL AUTO_INCREMENT,
+  `nom_boutique` varchar(40) NOT NULL,
+  `description_boutique` varchar(255) NOT NULL,
+  `note_boutique` float NOT NULL,
+  `position_latitude` float NOT NULL,
+  `position_longitude` float NOT NULL,
+  PRIMARY KEY (`id_boutique`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `boutique`
+--
+
+INSERT INTO `boutique` (`id_boutique`, `nom_boutique`, `description_boutique`, `note_boutique`, `position_latitude`, `position_longitude`) VALUES
+(1, 'Souvenir', 'Boutique de souvenir exceptionnelle.', 4, 0, 0),
+(2, 'Bricole', 'Boutique pour les bricoleurs.', 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -30,12 +54,25 @@ USE `puydufou`;
 
 CREATE TABLE IF NOT EXISTS `menu_restaurant` (
   `id_menu` int(10) NOT NULL AUTO_INCREMENT,
-  `id_service` int(10) NOT NULL,
-  `menu` varchar(10) NOT NULL,
+  `id_restaurant` int(10) NOT NULL,
+  `menu` varchar(50) NOT NULL,
+  `description_menu` varchar(255) NOT NULL,
   `tarif` float NOT NULL,
   PRIMARY KEY (`id_menu`),
-  KEY `id_service` (`id_service`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `id_service` (`id_restaurant`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `menu_restaurant`
+--
+
+INSERT INTO `menu_restaurant` (`id_menu`, `id_restaurant`, `menu`, `description_menu`, `tarif`) VALUES
+(2, 2, 'MENU JEUNES CONVIVES (Menu enfant jusqu''à 13ans)', 'Rosace de saumon fumé, Brochette de volaille marinée thym citron, pommes de terre de Noirmoutier, Profiteroles revisitées, sauce chocolat (crème glacée chocolat, vanille, fraises avec morceaux), Jus d’Orange (25 cl)', 18),
+(3, 2, 'MENU DILIGENCE (menu adulte)', 'Foie gras de canard confit au piment d’Espelette, Dos de saumon, jus vert de roquette, tomates farcies aux légumes, pommes de terre fondantes aux girolles et fèves\nAllumette croustillant caramel', 39),
+(4, 3, 'MENU ENFANT', 'Salade de tomates, oeuf dur façon mimosa, Croustillants de poulet, frites, Coupe gourmande glace vanille, sauce chocolat, Boisson enfant : Volvic au jus de pomme (33 cl)', 12.9),
+(5, 3, 'MENU ADULTE', 'Frisée aux lardons et croûtons, Cuisse de canard confite, sauce échalotes, pommes de terre de Noirmoutier, Éclair', 24),
+(6, 4, 'DEJEUNER ADULTE', 'Salade tomates roquette, Penne ou risotto avec 2 garnitures au choix, Panacotta, coulis de fruits', 20),
+(7, 4, 'DEJEUNER ENFANT', 'Salade tomates mozzarella, Penne bolognaise ou croustillant de poulet et tagliatelles, Coupe gourmande glace vanille, sauce chocolat, Boisson enfant : Volvic au jus de pomme (33 cl)', 12.9);
 
 -- --------------------------------------------------------
 
@@ -844,37 +881,31 @@ INSERT INTO `planning` (`id_planning`, `id_spectacle`, `jour_semaine`, `heure_de
 -- --------------------------------------------------------
 
 --
--- Structure de la table `service`
+-- Structure de la table `restaurant`
 --
 
-CREATE TABLE IF NOT EXISTS `service` (
-  `id_service` int(10) NOT NULL AUTO_INCREMENT,
-  `type_service` int(2) NOT NULL,
-  `nom_service` varchar(40) NOT NULL,
-  `description_service` varchar(255) NOT NULL,
-  `note_service` float NOT NULL,
+CREATE TABLE IF NOT EXISTS `restaurant` (
+  `id_restaurant` int(10) NOT NULL AUTO_INCREMENT,
+  `nom_restaurant` varchar(40) NOT NULL,
+  `description_restaurant` varchar(255) NOT NULL,
+  `note_restaurant` float NOT NULL,
   `position_latitude` float NOT NULL,
   `position_longitude` float NOT NULL,
-  PRIMARY KEY (`id_service`),
-  KEY `type_service` (`type_service`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  PRIMARY KEY (`id_restaurant`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Contenu de la table `service`
+-- Contenu de la table `restaurant`
 --
 
-INSERT INTO `service` (`id_service`, `type_service`, `nom_service`, `description_service`, `note_service`, `position_latitude`, `position_longitude`) VALUES
-(2, 1, 'L''Auberge', 'Au cœur du Village XVIIIème, profitez d''un repas classique dans le calme et le prestige de ce restaurant unique au Grand Parc.', 2.5, 0, 0),
-(3, 1, 'Le Bistrot', 'Dans le décor du Bourg 1900, cette véritable brasserie de la Belle Époque vous invite à redécouvrir une cuisine traditionnelle.', 2.5, 0, 0),
-(4, 1, 'L''Atrium', 'Revivez les fastes de l''Empire Romain dans le restaurant de la "Villa Gallo-Romaine".', 2.5, 0, 0),
-(5, 1, 'Les Deux Couronnes', 'Autour du grand brasero du palais du "Camp du Drap d''Or", partagez à volonté les grillades préférées du roi François Ier.', 2.5, 0, 0),
-(6, 1, 'Le Banquet de Mérovée', 'Situé dans les "Îles de Clovis", ce restaurant vous donne rendez-vous autour du vase de Soisson avec son grand buffet à volonté.', 2.5, 0, 0),
-(7, 1, 'L''Orangerie', 'A deux pas du Grand Carrousel et du Bourg 1900, profitez d''un grand buffet froid à volonté pour vous restaurer entre deux spectacles.', 2.5, 0, 0),
-(8, 1, 'La Taverne', 'Au cœur de la Cité Médiévale, accordez-vous une pause gourmande à la Taverne.', 2.5, 0, 0),
-(9, 1, 'La Rôtissoire', 'A l''ombre des parasols, au cœur du Village XVIIIème, profitez d''un repas chaud alliant le goût et  un service rapide.', 2.5, 0, 0),
-(10, 3, 'Les Îles de Clovis', 'Dormez dans cet hôtel inédit posé à la surface de l''eau et entièrement construit sur pilotis sur une surface de 7 hectares en pleine nature.', 2.5, 0, 0),
-(11, 3, 'La Villa Gallo-Romaine', 'Passez un séjour inoubliable en pleine "Rome Antique" dans l''une des 100 chambres familiales de cet hôtel unique (jusqu''à 5 personnes par chambre). A quelques pas du Stadium Gallo-Romain, vous entendrez peut-être les lions rugir !', 2.5, 0, 0),
-(12, 3, 'Le Logis de Lescure', 'Ce confortable logis du XVIIIème siècle comporte 4 suites à la fois chaleureuses et originales : Le Planétarium (6 lits), Le Salon de Musique (4 lits), Le Cabinet des Curiosités (6 lits) et la Salle des Miroirs (4 lits).Chaque suite peut accueillir de 4 à', 2.5, 0, 0);
+INSERT INTO `restaurant` (`id_restaurant`, `nom_restaurant`, `description_restaurant`, `note_restaurant`, `position_latitude`, `position_longitude`) VALUES
+(2, 'L''Auberge', 'Au cœur du Village XVIIIème, profitez d''un repas classique dans le calme et le prestige de ce restaurant unique au Grand Parc.', 2.5, 0, 0),
+(3, 'Le Bistrot', 'Dans le décor du Bourg 1900, cette véritable brasserie de la Belle Époque vous invite à redécouvrir une cuisine traditionnelle.', 2.5, 0, 0),
+(4, 'L''Atrium', 'Revivez les fastes de l''Empire Romain dans le restaurant de la "Villa Gallo-Romaine".', 2.5, 0, 0),
+(5, 'Les Deux Couronnes', 'Autour du grand brasero du palais du "Camp du Drap d''Or", partagez à volonté les grillades préférées du roi François Ier.', 2.5, 0, 0),
+(6, 'Le Banquet de Mérovée', 'Situé dans les "Îles de Clovis", ce restaurant vous donne rendez-vous autour du vase de Soisson avec son grand buffet à volonté.', 2.5, 0, 0),
+(7, 'L''Orangerie', 'A deux pas du Grand Carrousel et du Bourg 1900, profitez d''un grand buffet froid à volonté pour vous restaurer entre deux spectacles.', 2.5, 0, 0),
+(8, 'La Taverne', 'Au cœur de la Cité Médiévale, accordez-vous une pause gourmande à la Taverne.', 2.5, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -916,27 +947,6 @@ INSERT INTO `spectacle` (`id_spectacle`, `nom_spectacle`, `description_spectacle
 -- --------------------------------------------------------
 
 --
--- Structure de la table `type_service`
---
-
-CREATE TABLE IF NOT EXISTS `type_service` (
-  `id_type` int(2) NOT NULL AUTO_INCREMENT,
-  `libelle_type` varchar(40) NOT NULL,
-  PRIMARY KEY (`id_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Contenu de la table `type_service`
---
-
-INSERT INTO `type_service` (`id_type`, `libelle_type`) VALUES
-(1, 'Restaurant'),
-(2, 'Boutique'),
-(3, 'Hotel');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `utilisateur`
 --
 
@@ -966,7 +976,7 @@ INSERT INTO `utilisateur` (`id_utilisateur`) VALUES
 -- Contraintes pour la table `menu_restaurant`
 --
 ALTER TABLE `menu_restaurant`
-  ADD CONSTRAINT `menu_restaurant_ibfk_1` FOREIGN KEY (`id_service`) REFERENCES `service` (`id_service`);
+  ADD CONSTRAINT `menu_restaurant_ibfk_1` FOREIGN KEY (`id_restaurant`) REFERENCES `restaurant` (`id_restaurant`);
 
 --
 -- Contraintes pour la table `note`
@@ -980,12 +990,6 @@ ALTER TABLE `note`
 --
 ALTER TABLE `planning`
   ADD CONSTRAINT `planning_ibfk_1` FOREIGN KEY (`id_spectacle`) REFERENCES `spectacle` (`id_spectacle`);
-
---
--- Contraintes pour la table `service`
---
-ALTER TABLE `service`
-  ADD CONSTRAINT `service_ibfk_1` FOREIGN KEY (`type_service`) REFERENCES `type_service` (`id_type`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
