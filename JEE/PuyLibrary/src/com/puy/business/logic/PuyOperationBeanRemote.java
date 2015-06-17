@@ -8,6 +8,7 @@ package com.puy.business.logic;
 import com.puy.business.entites.Spectacle;
 import java.util.List;
 import javax.ejb.Remote;
+import javax.persistence.Query;
 
 /**
  *
@@ -19,5 +20,10 @@ public interface PuyOperationBeanRemote {
     public boolean verifierAdresseMac(String adresseMac);
 
     public List<Spectacle> getListeSpectacles();
+
+    
+    public List<Spectacle> getDetailSpectacles();
+
+    public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur);
     
 }
