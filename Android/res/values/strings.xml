@@ -5,7 +5,9 @@
 
     <string name="txt_services">Services</string>
     <string name="txt_plan">Plan</string>
-    <string name="txt_programme">Programme</string>
     <string name="txt_share">Share</string>
+    <string name="txt_programme">Prog</string>
+    
+    <string name="facebook_app_id">1735545830006322</string>
 
 </resources>
