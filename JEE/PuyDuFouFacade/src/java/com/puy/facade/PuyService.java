@@ -5,7 +5,9 @@
  */
 package com.puy.facade;
 
+import com.puy.business.entites.MenuRestaurant;
 import com.puy.business.entites.Planning;
+import com.puy.business.entites.Restaurant;
 import com.puy.business.entites.Spectacle;
 import com.puy.business.logic.PuyOperationBeanRemote;
 import java.text.DateFormat;
@@ -37,6 +39,12 @@ public class PuyService {
     private PuyOperationBeanRemote puyRemote;
     
     
+    @WebMethod(operationName = "getSpectacles")
+    public List<Spectacle> getSpectacles() {
+        
+        return puyRemote.getListeSpectacles();
+    }
+    
     @WebMethod(operationName = "verifierAdresseMac")
     public boolean verifierAdresseMac(@WebParam(name="adresseMac") String adresseMac) {
         
@@ -44,14 +52,39 @@ public class PuyService {
         
     }
     
+    @WebMethod(operationName = "noteExiste")
+    public boolean noteExiste(@WebParam(name="idSpectacle") int idSpectacle, @WebParam(name="adresseMac") String adresseMac) {
+        
+        return puyRemote.noteExiste(idSpectacle, adresseMac);
+        
+    }
+    
     @WebMethod(operationName = "evaluerSpectacle")
-    public String evaluerSpectacle(@WebParam(name="note")float note, @WebParam(name="idSpectacle") int idSpectacle, @WebParam(name="idUtilisateur") String idUtilisateur) {
+    public String evaluerSpectacle(@WebParam(name="note")int note, @WebParam(name="idSpectacle") int idSpectacle, @WebParam(name="idUtilisateur") String idUtilisateur) {
         if(note >= 0 && idSpectacle > 0 && idUtilisateur != null){
             return puyRemote.evaluerSpectacle(note, idSpectacle, idUtilisateur);
         }else{
             return "Les paramètres sont incorrects";
         }
     }
+    
+    @WebMethod(operationName = "getHorairesSpectacle")
+    public List<Planning> getHorairesSpectacle(@WebParam(name="idSpectacle") int idSpectacle) {
+        
+        return puyRemote.getHorairesSpectacle(idSpectacle);
+        
+    }
+    
+    @WebMethod(operationName = "getListeRestaurants")
+    public List<Restaurant> getListeRestaurants() {
+        return puyRemote.getListeRestaurants();
+    }
+    
+    @WebMethod(operationName = "getListeMenuRestaurant")
+    public List<MenuRestaurant> getListeMenuRestaurant(@WebParam(name="idRestaurant") int idRestaurant) {
+        return puyRemote.getMenuRestaurant(idRestaurant);
+    }
+
     
     @WebMethod(operationName = "hello")
     public String hello() {
@@ -63,11 +96,7 @@ public class PuyService {
         return "Test de string";
     }
     
-    @WebMethod(operationName = "getSpectacles")
-    public List<Spectacle> getSpectacles() {
-        
-        return puyRemote.getListeSpectacles();
-    }
+    
     
     /*
     @WebMethod(operationName = "getDetailSpectacles")

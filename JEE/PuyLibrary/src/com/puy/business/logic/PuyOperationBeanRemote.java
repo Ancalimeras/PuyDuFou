@@ -5,6 +5,9 @@
  */
 package com.puy.business.logic;
 
+import com.puy.business.entites.MenuRestaurant;
+import com.puy.business.entites.Planning;
+import com.puy.business.entites.Restaurant;
 import com.puy.business.entites.Spectacle;
 import java.util.List;
 import javax.ejb.Remote;
@@ -22,8 +25,18 @@ public interface PuyOperationBeanRemote {
     public List<Spectacle> getListeSpectacles();
 
     
-    public List<Spectacle> getDetailSpectacles();
+    //public List<Spectacle> getDetailSpectacles();
 
-    public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur);
+    //public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur);
+
+    public List<Planning> getHorairesSpectacle(int idSpectacle);
+
+    public String evaluerSpectacle(int note, int idSpectacle, String idUtilisateur);
+
+    public boolean noteExiste(int idSpectacle, String idUtilisateur);
+
+    public List<Restaurant> getListeRestaurants();
+
+    public List<MenuRestaurant> getMenuRestaurant(int idRestaurant);
     
 }

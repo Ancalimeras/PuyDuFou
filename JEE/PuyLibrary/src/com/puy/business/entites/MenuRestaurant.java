@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MenuRestaurant.findAll", query = "SELECT m FROM MenuRestaurant m"),
     @NamedQuery(name = "MenuRestaurant.findByIdMenu", query = "SELECT m FROM MenuRestaurant m WHERE m.idMenu = :idMenu"),
     @NamedQuery(name = "MenuRestaurant.findByMenu", query = "SELECT m FROM MenuRestaurant m WHERE m.menu = :menu"),
+    @NamedQuery(name = "MenuRestaurant.findByDescriptionMenu", query = "SELECT m FROM MenuRestaurant m WHERE m.descriptionMenu = :descriptionMenu"),
     @NamedQuery(name = "MenuRestaurant.findByTarif", query = "SELECT m FROM MenuRestaurant m WHERE m.tarif = :tarif")})
 public class MenuRestaurant implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -42,16 +43,21 @@ public class MenuRestaurant implements Serializable {
     private Integer idMenu;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 50)
     @Column(name = "menu")
     private String menu;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "description_menu")
+    private String descriptionMenu;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "tarif")
     private float tarif;
-    @JoinColumn(name = "id_service", referencedColumnName = "id_service")
+    @JoinColumn(name = "id_restaurant", referencedColumnName = "id_restaurant")
     @ManyToOne(optional = false)
-    private Service idService;
+    private Restaurant idRestaurant;
 
     public MenuRestaurant() {
     }
@@ -60,9 +66,10 @@ public class MenuRestaurant implements Serializable {
         this.idMenu = idMenu;
     }
 
-    public MenuRestaurant(Integer idMenu, String menu, float tarif) {
+    public MenuRestaurant(Integer idMenu, String menu, String descriptionMenu, float tarif) {
         this.idMenu = idMenu;
         this.menu = menu;
+        this.descriptionMenu = descriptionMenu;
         this.tarif = tarif;
     }
 
@@ -82,6 +89,14 @@ public class MenuRestaurant implements Serializable {
         this.menu = menu;
     }
 
+    public String getDescriptionMenu() {
+        return descriptionMenu;
+    }
+
+    public void setDescriptionMenu(String descriptionMenu) {
+        this.descriptionMenu = descriptionMenu;
+    }
+
     public float getTarif() {
         return tarif;
     }
@@ -90,12 +105,12 @@ public class MenuRestaurant implements Serializable {
         this.tarif = tarif;
     }
 
-    public Service getIdService() {
-        return idService;
+    public Restaurant getIdRestaurant() {
+        return idRestaurant;
     }
 
-    public void setIdService(Service idService) {
-        this.idService = idService;
+    public void setIdRestaurant(Restaurant idRestaurant) {
+        this.idRestaurant = idRestaurant;
     }
 
     @Override

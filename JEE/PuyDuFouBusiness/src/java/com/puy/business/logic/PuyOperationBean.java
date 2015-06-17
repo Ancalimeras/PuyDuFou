@@ -5,17 +5,22 @@
  */
 package com.puy.business.logic;
 
+import com.puy.business.entites.MenuRestaurant;
 import com.puy.business.entites.Note;
 import com.puy.business.entites.NotePK;
 import com.puy.business.entites.Planning;
+import com.puy.business.entites.Restaurant;
 import com.puy.business.entites.Spectacle;
 import com.puy.business.entites.Utilisateur;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -65,7 +70,26 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
     }
     
     @Override
-    public String evaluerSpectacle(float note, int idSpectacle, String idUtilisateur) {
+    public boolean noteExiste(int idSpectacle, String idUtilisateur) {
+        
+        Spectacle spec = em.find(Spectacle.class, idSpectacle);
+        Utilisateur util = em.find(Utilisateur.class, idUtilisateur);
+        
+            Query q = em.createQuery("SELECT n.note FROM Note n WHERE n.spectacle = :idSpectacle and n.utilisateur = :utilisateur").setParameter("idSpectacle", spec).setParameter("utilisateur", util);
+
+            List results = q.getResultList();
+
+            if(results.isEmpty()){
+                return false;
+            }else{
+                return true;
+            }
+            
+    }
+        
+    
+    @Override
+    public String evaluerSpectacle(int note, int idSpectacle, String idUtilisateur) {
         if(note >= 0 && idSpectacle > 0 && idUtilisateur != null){
             List<Spectacle> sList = em.createNamedQuery("Spectacle.findByIdSpectacle").setParameter("idSpectacle", idSpectacle).getResultList();
             if(!sList.isEmpty()){
@@ -94,8 +118,54 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
             return "Erreur: paramètre null";
         }        
     }
+    
+    
+    @Override
+    public List<Planning> getHorairesSpectacle(int idSpectacle) {
+        Spectacle spec = em.find(Spectacle.class, idSpectacle);
+        
+        Locale locale = Locale.FRANCE;
+        Date d = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        
+        String date_jour = date.format(d);
+        
+        
+        List<Planning> listPlanning = em.createQuery("SELECT p.heureDebut FROM Planning p WHERE p.idSpectacle = :idSpectacle AND p.jourSemaine = :jour").setParameter("idSpectacle", spec).setParameter("jour", date_jour).getResultList();
+        
+        return listPlanning;
+    }
+    
+    @Override
+    public List<Restaurant> getListeRestaurants() {
+        List<Restaurant> rList = em.createNamedQuery("Restaurant.findAll").getResultList();
+        if(rList.isEmpty()){
+            rList = new ArrayList<Restaurant>();
+        }
+        return rList;
+    }
+
+    @Override
+    public List<MenuRestaurant> getMenuRestaurant(int idRestaurant) {
+        Restaurant restaurant = em.find(Restaurant.class, idRestaurant);
+        List<MenuRestaurant> mr = new ArrayList<MenuRestaurant>();
+        List<MenuRestaurant> mrList = em.createQuery("Select mr FROM MenuRestaurant mr WHERE mr.idRestaurant = :idRestaurant").setParameter("idRestaurant", restaurant).getResultList();
+        if(!mrList.isEmpty()){
+            for(MenuRestaurant menu : mrList){
+                MenuRestaurant r = new MenuRestaurant();
+                r.setMenu(menu.getMenu());
+                r.setDescriptionMenu(menu.getDescriptionMenu());
+                r.setTarif(menu.getTarif());
+                mr.add(r);
+            }
+        }
+        return mr;
+    }
 
     
+    
+
+    /*
     @Override
     public List<Spectacle> getDetailSpectacles() {
     List<Spectacle> ls = em.createQuery("SELECT s FROM Spectacle s order by s.idSpectacle").getResultList();
@@ -118,7 +188,7 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
     return ls;
     
     }
-    
+    */
     
     
 }
