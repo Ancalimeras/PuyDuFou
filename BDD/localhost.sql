@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Mar 16 Juin 2015 à 08:57
+-- Généré le : Mer 17 Juin 2015 à 07:18
 -- Version du serveur: 5.5.20
 -- Version de PHP: 5.3.10
 
@@ -50,6 +50,19 @@ CREATE TABLE IF NOT EXISTS `note` (
   PRIMARY KEY (`id_spectacle`,`id_utilisateur`),
   KEY `id_utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `note`
+--
+
+INSERT INTO `note` (`id_spectacle`, `id_utilisateur`, `note`) VALUES
+(1, '00:00:00:00:00:0A', 2),
+(1, '00:00:00:00:00:0B', 3),
+(1, '00:00:00:00:00:0C', 5),
+(2, '00:00:00:00:00:0A', 3),
+(3, '00:00:00:00:00:0A', 4),
+(4, '00:00:00:00:00:0A', 3),
+(4, '00:00:00:00:00:0B', 3);
 
 -- --------------------------------------------------------
 
@@ -502,25 +515,25 @@ CREATE TABLE IF NOT EXISTS `spectacle` (
   `moyenne_note` float NOT NULL,
   `image` varchar(200) NOT NULL,
   PRIMARY KEY (`id_spectacle`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `spectacle`
 --
 
 INSERT INTO `spectacle` (`id_spectacle`, `nom_spectacle`, `description_spectacle`, `nb_acteurs`, `duree`, `position_latitude`, `position_longitude`, `moyenne_note`, `image`) VALUES
-(1, 'Le signe du triomphe', 'Vivez la fureur des jeux du cirque !  Pour sauver leur vie, des prisonniers gaulois sont condamnés à remporter les Jeux du Cirque sous les yeux du gouverneur romain. Vous êtes prêts ? Installez-vous dans les tribunes du Stadium Gallo-Romain et laissez vou', 8, 45, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_signe.jpg'),
-(2, 'Les vikings', 'Surgissant de leurs drakkars au milieu des flammes gigantesques, les féroces vikings attaquent le paisible Fort de l''An Mil aux toits de chaume. Au pied d''une tour de 22 mètres, le combat fait rage dans un déluge d''effets spéciaux.', 8, 28, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_vikings.jpg'),
-(3, 'Le bal des oiseaux fantômes', 'Aliénor se réveille dans les ruines du vieux château et ses souvenirs font surgir les faucons, les hiboux et les vautours qui vous frôlent de leurs ailes géantes.Vous n''oublierez jamais le grand ballet des milans, pélicans, cigognes et marabouts... un spe', 2, 33, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_bof.jpg'),
-(4, 'Le secret de la lance', 'Après le départ des chevaliers pour Orléans, Marguerite, une jeune bergère, reste seule au château. Elle va devoir découvrir le secret d''une lance aux pouvoirs fantastiques pour protéger les remparts enchantés du château en pleine bataille.', 8, 28, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_lance.jpg'),
-(5, 'Mousquetaire de Richelieu', 'Sur les planches d''un théâtre monumental du XVIIème siècle, les mousquetaires vous emportent dans un spectacle de cape et d''épée où l''émerveillement est permanent.', 6, 36, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_mousquetaires.jpg'),
-(6, 'Les orgues de feu', 'Chaque soir, sur le vieil étang du Puy du Fou, les musiciens romantiques apparaissent dans leurs costumes de lumières et font danser muses et farfadets dans une symphonie fantastique d''eau et de feu.', 0, 30, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_orgues.jpg'),
-(7, 'Les chevaliers de la table ronde', 'Au pied des remparts, Merlin met le courage d’Arthur à l’épreuve. Après avoir vaincu le sortilège d’Excalibur, Arthur découvre les prodiges du lac enchanteur? !', 4, 18, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_tableronde.jpg'),
-(8, 'L''Odyssée du Puy du Fou', 'Vous traverserez les siècles de la Rome Antique à la Révolution Française.', 1, 18, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_odyssee.jpg'),
-(9, 'Les automates musiciens', 'Au Bourg 1900, les "Avis à la population" du garde champêtre sont souvent interrompus par l''apparition des automates musiciens aux balcons.', 1, 7, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_automates.jpg'),
-(10, 'Les musiciens traditionnels', 'Les musiciens traditionnels vous invitent à la danse.', 2, 20, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_musiciens.jpg'),
-(11, 'Les Grands Eaux', 'Grand spectacle, grande musique, laissez-vous porter par cet orchestre d''eau.', 0, 8, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_grandeseaux.jpg'),
-(12, 'La légende de Martin', 'Les marionnettes de la Légende de Martin entraînent les enfants à la poursuite de la malbête, un monstre férocement drôle.', 1, 15, 0, 0, 2.5, 'http://www.puydufou.com/sites/all/themes/dounypdf/img/plan/plan_martin.jpg');
+(1, 'Le signe du triomphe', 'Vivez la fureur des jeux du cirque !  Pour sauver leur vie, des prisonniers gaulois sont condamnés à remporter les Jeux du Cirque sous les yeux du gouverneur romain. Vous êtes prêts ? Installez-vous dans les tribunes du Stadium Gallo-Romain et laissez vou', 8, 45, 0, 0, 3.33333, 'plan_signe.jpg'),
+(2, 'Les vikings', 'Surgissant de leurs drakkars au milieu des flammes gigantesques, les féroces vikings attaquent le paisible Fort de l''An Mil aux toits de chaume. Au pied d''une tour de 22 mètres, le combat fait rage dans un déluge d''effets spéciaux.', 8, 28, 0, 0, 2.5, 'plan_vikings.jpg'),
+(3, 'Le bal des oiseaux fantômes', 'Aliénor se réveille dans les ruines du vieux château et ses souvenirs font surgir les faucons, les hiboux et les vautours qui vous frôlent de leurs ailes géantes.Vous n''oublierez jamais le grand ballet des milans, pélicans, cigognes et marabouts... un spe', 2, 33, 0, 0, 2.5, 'plan_bof.jpg'),
+(4, 'Le secret de la lance', 'Après le départ des chevaliers pour Orléans, Marguerite, une jeune bergère, reste seule au château. Elle va devoir découvrir le secret d''une lance aux pouvoirs fantastiques pour protéger les remparts enchantés du château en pleine bataille.', 8, 28, 0, 0, 3, 'plan_lance.jpg'),
+(5, 'Mousquetaire de Richelieu', 'Sur les planches d''un théâtre monumental du XVIIème siècle, les mousquetaires vous emportent dans un spectacle de cape et d''épée où l''émerveillement est permanent.', 6, 36, 0, 0, 2.5, 'plan_mousquetaires.jpg'),
+(6, 'Les orgues de feu', 'Chaque soir, sur le vieil étang du Puy du Fou, les musiciens romantiques apparaissent dans leurs costumes de lumières et font danser muses et farfadets dans une symphonie fantastique d''eau et de feu.', 0, 30, 0, 0, 2.5, 'plan_orgues.jpg'),
+(7, 'Les chevaliers de la table ronde', 'Au pied des remparts, Merlin met le courage d’Arthur à l’épreuve. Après avoir vaincu le sortilège d’Excalibur, Arthur découvre les prodiges du lac enchanteur? !', 4, 18, 0, 0, 2.5, 'plan_tableronde.jpg'),
+(8, 'L''Odyssée du Puy du Fou', 'Vous traverserez les siècles de la Rome Antique à la Révolution Française.', 1, 18, 0, 0, 2.5, 'plan_odyssee.jpg'),
+(9, 'Les automates musiciens', 'Au Bourg 1900, les "Avis à la population" du garde champêtre sont souvent interrompus par l''apparition des automates musiciens aux balcons.', 1, 7, 0, 0, 2.5, 'plan_automates.jpg'),
+(10, 'Les musiciens traditionnels', 'Les musiciens traditionnels vous invitent à la danse.', 2, 20, 0, 0, 2.5, 'plan_musiciens.jpg'),
+(11, 'Les Grands Eaux', 'Grand spectacle, grande musique, laissez-vous porter par cet orchestre d''eau.', 0, 8, 0, 0, 2.5, 'plan_grandeseaux.jpg'),
+(12, 'La légende de Martin', 'Les marionnettes de la Légende de Martin entraînent les enfants à la poursuite de la malbête, un monstre férocement drôle.', 1, 15, 0, 0, 2.5, 'plan_martin.jpg');
 
 -- --------------------------------------------------------
 
@@ -553,6 +566,15 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_utilisateur` varchar(17) NOT NULL,
   PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id_utilisateur`) VALUES
+('00:00:00:00:00:0A'),
+('00:00:00:00:00:0B'),
+('00:00:00:00:00:0C');
 
 --
 -- Contraintes pour les tables exportées
