@@ -5,6 +5,7 @@
  */
 package com.puy.business.logic;
 
+import com.puy.business.entites.Boutique;
 import com.puy.business.entites.MenuRestaurant;
 import com.puy.business.entites.Planning;
 import com.puy.business.entites.Restaurant;
@@ -38,5 +39,7 @@ public interface PuyOperationBeanRemote {
     public List<Restaurant> getListeRestaurants();
 
     public List<MenuRestaurant> getMenuRestaurant(int idRestaurant);
+
+    public List<Boutique> getListeBoutiques();
     
 }

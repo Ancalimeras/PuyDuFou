@@ -5,6 +5,7 @@
  */
 package com.puy.facade;
 
+import com.puy.business.entites.Boutique;
 import com.puy.business.entites.MenuRestaurant;
 import com.puy.business.entites.Planning;
 import com.puy.business.entites.Restaurant;
@@ -86,14 +87,9 @@ public class PuyService {
     }
 
     
-    @WebMethod(operationName = "hello")
-    public String hello() {
-        /*Locale locale = Locale.FRANCE;
-        Date d = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
-        */
-        //date.format(d)
-        return "Test de string";
+    @WebMethod(operationName = "getListeBoutiques")
+    public List<Boutique> getListeBoutiques() {
+        return puyRemote.getListeBoutiques();
     }
     
     

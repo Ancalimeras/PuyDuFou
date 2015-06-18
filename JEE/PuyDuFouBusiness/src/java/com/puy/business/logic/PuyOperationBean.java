@@ -5,6 +5,7 @@
  */
 package com.puy.business.logic;
 
+import com.puy.business.entites.Boutique;
 import com.puy.business.entites.MenuRestaurant;
 import com.puy.business.entites.Note;
 import com.puy.business.entites.NotePK;
@@ -162,7 +163,14 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
         return mr;
     }
 
-    
+    @Override
+    public List<Boutique> getListeBoutiques() {
+        List<Boutique> bList = em.createNamedQuery("Boutique.findAll").getResultList();
+        if(bList.isEmpty()){
+            bList = new ArrayList<Boutique>();
+        }
+        return bList;
+    }
     
 
     /*
