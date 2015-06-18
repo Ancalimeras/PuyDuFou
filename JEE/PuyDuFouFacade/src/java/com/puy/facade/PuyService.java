@@ -11,6 +11,11 @@ import com.puy.business.entites.Planning;
 import com.puy.business.entites.Restaurant;
 import com.puy.business.entites.Spectacle;
 import com.puy.business.logic.PuyOperationBeanRemote;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,11 +23,17 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -34,10 +45,14 @@ import javax.persistence.Query;
 @WebService(serviceName = "PuyService", name="Puy")
 @Stateless
 public class PuyService {
-
+    
     
     @EJB
     private PuyOperationBeanRemote puyRemote;
+    
+    //PuyOperationBeanRemote puyRemote = lookupPuyOperationBeanRemote();
+    
+    
     
     
     @WebMethod(operationName = "getSpectacles")
@@ -76,6 +91,7 @@ public class PuyService {
         
     }
     
+    
     @WebMethod(operationName = "getListeRestaurants")
     public List<Restaurant> getListeRestaurants() {
         return puyRemote.getListeRestaurants();
@@ -93,14 +109,16 @@ public class PuyService {
     }
     
     
+    @WebMethod(operationName = "getSpectaclesAVenir")
+    public List<Spectacle> getSpectaclesAVenir() {
+        return puyRemote.getSpectaclesAVenir();
+    }
     
-    /*
-    @WebMethod(operationName = "getDetailSpectacles")
-    public List<Spectacle> getDetailSpectacles() {
-        
-        return puyRemote.getDetailSpectacles();
-        
-    }*/
+    @WebMethod(operationName = "getHorairesAVenir")
+    public List<Planning> getHorairesAVenir(@WebParam(name="idSpectacle") int idSpectacle) {
+        return puyRemote.getHorairesAVenir(idSpectacle);
+    }
+
     
     
 }

@@ -41,5 +41,9 @@ public interface PuyOperationBeanRemote {
     public List<MenuRestaurant> getMenuRestaurant(int idRestaurant);
 
     public List<Boutique> getListeBoutiques();
+
+    public List<Spectacle> getSpectaclesAVenir();
+
+    public List<Planning> getHorairesAVenir(int idSpectacle);
     
 }

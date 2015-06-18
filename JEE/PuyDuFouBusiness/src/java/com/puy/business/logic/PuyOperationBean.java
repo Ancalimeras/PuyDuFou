@@ -14,6 +14,7 @@ import com.puy.business.entites.Restaurant;
 import com.puy.business.entites.Spectacle;
 import com.puy.business.entites.Utilisateur;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +23,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -137,6 +140,7 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
         return listPlanning;
     }
     
+    
     @Override
     public List<Restaurant> getListeRestaurants() {
         List<Restaurant> rList = em.createNamedQuery("Restaurant.findAll").getResultList();
@@ -173,30 +177,47 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
     }
     
 
-    /*
     @Override
-    public List<Spectacle> getDetailSpectacles() {
-    List<Spectacle> ls = em.createQuery("SELECT s FROM Spectacle s order by s.idSpectacle").getResultList();
-    
-    for (Spectacle s : ls){
-        //List<Planning> lp = s.getPlanningCollection();
-        
-        //Collection<Planning> listSpec = new LinkedList<Planning>();
-        List<Planning> lp = em.createQuery("SELECT p FROM Planning p WHERE p.idSpectacle = :spectacle").setParameter("spectacle", s).getResultList();
-        //setPlanningCollection(lp)
-        for(Planning p: lp){
-            
-            em.detach(p);
-            //p.setIdSpectacle(null);
-            //listSpec.add(p);
-            s.getPlanningCollection().add(p);
+    public List<Spectacle> getSpectaclesAVenir() {
+        Locale locale = Locale.FRANCE;
+        Date d = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        String date_jour = date.format(d);
+        SimpleDateFormat heure = new SimpleDateFormat("kk:mm", locale);
+        String heureStr = heure.format(d);
+        Date compareDate = null;
+        try {
+            compareDate = heure.parse(heureStr);
+        } catch (ParseException ex) {
+            Logger.getLogger(PuyOperationBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //s.setPlanningCollection(listSpec);
+        List<Spectacle> sList = em.createQuery("SELECT DISTINCT s FROM Planning p LEFT JOIN p.idSpectacle s WHERE p.heureDebut > :heure AND p.jourSemaine = :jourSemaine").setParameter("heure", compareDate).setParameter("jourSemaine", date_jour).getResultList();
+      
+        return sList;
     }
-    return ls;
-    
+
+    @Override
+    public List<Planning> getHorairesAVenir(int idSpectacle) {
+        Spectacle spectacle = em.find(Spectacle.class, idSpectacle);
+        Locale locale = Locale.FRANCE;
+        Date d = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        String date_jour = date.format(d);
+        SimpleDateFormat heure = new SimpleDateFormat("kk:mm", locale);
+        String heureStr = heure.format(d);
+        Date compareDate = null;
+        try {
+            compareDate = heure.parse(heureStr);
+        } catch (ParseException ex) {
+            Logger.getLogger(PuyOperationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<Planning> pList = em.createQuery("SELECT p.heureDebut FROM Planning p WHERE p.heureDebut > :heure AND p.jourSemaine = :jourSemaine AND p.idSpectacle = :idSpectacle").setParameter("heure", compareDate).setParameter("jourSemaine", date_jour).setParameter("idSpectacle", spectacle).getResultList();
+        if(pList.isEmpty()){
+            pList = new ArrayList<Planning>();
+        }
+        return pList;
     }
-    */
+
     
     
 }
