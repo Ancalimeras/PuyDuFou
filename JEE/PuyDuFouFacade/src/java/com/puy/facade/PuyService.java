@@ -119,6 +119,14 @@ public class PuyService {
         return puyRemote.getHorairesAVenir(idSpectacle);
     }
 
+    /*@WebMethod(operationName = "tempsActivites")
+    public int tempsActivites(@WebParam(name="lat1") float lat1,@WebParam(name="lng1") float lng1,@WebParam(name="lat2") float lat2,@WebParam(name="lng2") float lng2) {
+        return puyRemote.tempsActivites(lat1, lng1, lat2, lng2);
+    }*/
     
+    @WebMethod(operationName = "getMeilleurPlanning")
+    public List<Spectacle> getMeilleurPlanning() {
+        return puyRemote.getMeilleurPlanning();
+    }
     
 }

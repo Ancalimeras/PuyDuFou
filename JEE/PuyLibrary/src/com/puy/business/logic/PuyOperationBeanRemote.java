@@ -46,4 +46,8 @@ public interface PuyOperationBeanRemote {
 
     public List<Planning> getHorairesAVenir(int idSpectacle);
     
+    public int tempsActivites(float lat1, float lng1, float lat2, float lng2);
+
+    public List<Spectacle> getMeilleurPlanning();
+    
 }

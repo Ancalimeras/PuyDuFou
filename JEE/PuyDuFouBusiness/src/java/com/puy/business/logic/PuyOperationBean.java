@@ -217,7 +217,77 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
         }
         return pList;
     }
-
     
+    @Override
+    public int tempsActivites(float lat1, float lng1, float lat2, float lng2){
+            Float distance = distance(lat1,lng1,lat2,lng2);
+            
+            
+            Float timeToGo = distance / (5000/60);
+            
+            int tempsTotal = (int) Math.ceil(timeToGo);
+            
+            return tempsTotal;
+    }
+    
+    public Float distance(float lat1, float lng1, float lat2, float lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                   Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                   Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
+    
+    @Override
+    public List<Spectacle> getMeilleurPlanning() {      
+        Locale locale = Locale.FRANCE;
+        Date d = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("EEEE", locale);
+        String date_jour = date.format(d);
+        List<Spectacle> specList = em.createQuery("SELECT p FROM Planning p LEFT JOIN p.idSpectacle s WHERE p.jourSemaine = :jourSemaine ORDER BY p.heureDebut").setParameter("jourSemaine", date_jour).getResultList();
+        List<Planning> pList = em.createQuery("SELECT p FROM Planning p WHERE p.jourSemaine = :jourSemaine ORDER BY p.heureDebut").setParameter("jourSemaine", date_jour).getResultList();
+        List<Spectacle> sList = new ArrayList<Spectacle>();  
+        Spectacle lastSpec = pList.get(0).getIdSpectacle();       
+        Date lastH = new Date(0);
+        Date pauseMidi = new Date(11*3600*1000);
+        Date pauseSoir = new Date(19*3600*1000);
+        boolean doitDejeuner = true;
+        boolean doitDiner = true;
+        int tpsMarche = 0;
+        for(Planning p : pList){
+            if(!sList.contains(p.getIdSpectacle())){
+                if(pauseMidi.before(p.getHeureDebut()) && doitDejeuner){
+                    System.out.println("PAUSE MIDI" + pauseMidi);
+                    lastH = new Date(lastH.getTime() + 3600*1000);
+                    doitDejeuner = false;
+                }
+                if(pauseSoir.before(p.getHeureDebut()) && doitDiner){
+                    System.out.println("PAUSE SOIR" + pauseSoir);
+                    lastH = new Date(lastH.getTime() + 3600*1000);
+                    doitDiner = false;
+                }
+                tpsMarche = tempsActivites(lastSpec.getPositionLatitude(),lastSpec.getPositionLongitude(), p.getIdSpectacle().getPositionLatitude(), p.getIdSpectacle().getPositionLongitude());
+                Date heureIntervalle = new Date(lastH.getTime() + tpsMarche*60*1000);
+                if(p.getHeureDebut().after(heureIntervalle)){                    
+                    System.out.println("last h : "+ heureIntervalle);
+                    System.out.println("heure début : "+p.getHeureDebut());
+                    lastSpec = p.getIdSpectacle();
+                    sList.add(lastSpec);                  
+                    lastH = new Date(p.getHeureDebut().getTime() + p.getIdSpectacle().getDuree()*60*1000 + 600*1000);                                    
+                }else{
+                    specList.remove(p);
+                }
+            }else{
+                specList.remove(p);
+            }
+        }
+        return specList;
+    }
+
     
 }
