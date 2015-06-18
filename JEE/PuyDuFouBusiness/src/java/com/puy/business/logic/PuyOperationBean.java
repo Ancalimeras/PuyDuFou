@@ -191,7 +191,7 @@ public class PuyOperationBean implements PuyOperationBeanRemote {
         } catch (ParseException ex) {
             Logger.getLogger(PuyOperationBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<Spectacle> sList = em.createQuery("SELECT DISTINCT s FROM Planning p LEFT JOIN p.idSpectacle s WHERE p.heureDebut > :heure AND p.jourSemaine = :jourSemaine").setParameter("heure", compareDate).setParameter("jourSemaine", date_jour).getResultList();
+        List<Spectacle> sList = em.createQuery("SELECT DISTINCT s FROM Planning p LEFT JOIN p.idSpectacle s WHERE p.heureDebut > :heure AND p.jourSemaine = :jourSemaine ORDER BY p.heureDebut").setParameter("heure", compareDate).setParameter("jourSemaine", date_jour).getResultList();
       
         return sList;
     }
